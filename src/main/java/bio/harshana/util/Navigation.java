@@ -48,6 +48,9 @@ public class Navigation {
             case HISTORY:
                 panelUpdate("History", secondaryPain);
                 break;
+            case UNPAID:
+                panelUpdate("UnPaid", secondaryPain);
+                break;
         }
 
     }

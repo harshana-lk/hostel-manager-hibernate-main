@@ -6,46 +6,42 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bio.harshana.controllers.LandingPaneController">
+<AnchorPane prefHeight="576.0" prefWidth="991.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bio.harshana.controllers.LandingPaneController">
    <children>
-      <AnchorPane fx:id="secondaryPain" layoutX="7.0" prefHeight="576.0" prefWidth="991.0" style="-fx-background-color: #ffffff;">
-         <children>
-            <Label layoutX="56.0" layoutY="401.0" text="or follow the locals.">
-               <font>
-                  <Font name="Consolas Bold" size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="56.0" layoutY="117.0" text="Rest">
-               <font>
-                  <Font name="Consolas Bold" size="51.0" />
-               </font>
-            </Label>
-            <Label layoutX="56.0" layoutY="175.0" text="Study">
-               <font>
-                  <Font name="Consolas Bold" size="51.0" />
-               </font>
-            </Label>
-            <Label layoutX="56.0" layoutY="357.0" text="Explore the best of Municipality of Loppersum! Whether">
-               <font>
-                  <Font name="Consolas Bold" size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="56.0" layoutY="378.0" text="you want to experience the city like a tourist">
-               <font>
-                  <Font name="Consolas Bold" size="15.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="553.0" fitWidth="463.0" layoutX="521.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@assets/studying.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="56.0" layoutY="237.0" text="Enjoy the Day">
-               <font>
-                  <Font name="Consolas Bold" size="51.0" />
-               </font>
-            </Label>
-         </children>
-      </AnchorPane>
+      <Label layoutX="59.0" layoutY="411.0" text="or follow the locals.">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="127.0" text="Rest">
+         <font>
+            <Font name="Consolas Bold" size="51.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="185.0" text="Study">
+         <font>
+            <Font name="Consolas Bold" size="51.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="367.0" text="Explore the best of Municipality of Loppersum! Whether">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+      </Label>
+      <Label layoutX="59.0" layoutY="388.0" text="you want to experience the city like a tourist">
+         <font>
+            <Font name="Consolas Bold" size="15.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="553.0" fitWidth="463.0" layoutX="524.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@assets/studying.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="59.0" layoutY="247.0" text="Enjoy the Day">
+         <font>
+            <Font name="Consolas Bold" size="51.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

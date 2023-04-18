@@ -117,6 +117,18 @@ public class DashboardController {
     }
 
     public void unPaidSts(MouseEvent mouseEvent) {
+        lineHome.setOpacity(0);
+        lineRooms.setOpacity(0);
+        lineStudents.setOpacity(0);
+        lineReservation.setOpacity(0);
+        lineHistory.setOpacity(0);
+        lineUnpaid.setOpacity(1);
+        try {
+            Navigation.setPane(Routes.HISTORY, secondaryPain);
+        } catch (IOException e) {
+            e.printStackTrace();
+            new Alert(Alert.AlertType.ERROR, "Error while loading");
+        }
     }
 
 

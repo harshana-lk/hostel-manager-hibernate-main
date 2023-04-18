@@ -7,6 +7,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import bio.harshana.bo.custom.UserBO;
 import bio.harshana.dto.UserDTO;
+import javafx.stage.StageStyle;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class AppInitializer extends Application {
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/Dashboard.fxml")));
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
+        primaryStage.initStyle(StageStyle.UNDECORATED);
         primaryStage.show();
     }
 
