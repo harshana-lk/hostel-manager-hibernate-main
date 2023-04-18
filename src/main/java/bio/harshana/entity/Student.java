@@ -1,0 +1,44 @@
+package bio.harshana.entity;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import bio.harshana.dto.StudentDTO;
+
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Entity
+public class Student {
+    @Id
+    @Column(nullable = false)
+    private String id;
+    private String name;
+    @Column(columnDefinition = "TEXT")
+    private String address;
+    private String contact;
+    private LocalDate dob;
+    private String gender;
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Reservation> reservations = new ArrayList<>();
+
+
+    public Student(String id, String name, String address, String contact, LocalDate dob, String gender) {
+        this.id = id;
+        this.name = name;
+        this.address = address;
+        this.contact = contact;
+        this.dob = dob;
+        this.gender = gender;
+    }
+
+    public StudentDTO toStudentDTO() {
+        return new StudentDTO(this.id, this.name, this.address, this.contact, this.dob, this.gender);
+
+    }
+}
