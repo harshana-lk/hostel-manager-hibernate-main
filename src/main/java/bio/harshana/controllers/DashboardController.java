@@ -32,6 +32,8 @@ public class DashboardController {
     public Label lblUnPaid;
     public Line lineUnpaid;
     public JFXButton btnClose;
+    public Label lblUserName;
+    public AnchorPane AnchorPaneContext;
 
 
     public void initialize(){
@@ -99,8 +101,12 @@ public class DashboardController {
         }
     }
 
-    public void closeOnAction() {
-        Platform.exit();
+    public void closeOnAction() throws IOException {
+        Stage stage = (Stage) AnchorPaneContext.getScene().getWindow();
+        stage.setTitle("Login Page");
+        stage.setScene(new Scene(FXMLLoader.load(Navigation.class.getResource("/view/Login.fxml"))));
+        stage.centerOnScreen();
+        stage.show();
     }
 
     public void historyOnAction(MouseEvent mouseEvent) {

@@ -21,7 +21,7 @@ public class AppInitializer extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         createDemoUser();
-        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/Dashboard.fxml")));
+        Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/view/Login.fxml")));
         primaryStage.setScene(scene);
         primaryStage.centerOnScreen();
         primaryStage.initStyle(StageStyle.UNDECORATED);

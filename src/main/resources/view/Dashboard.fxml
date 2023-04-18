@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #ffffff; -fx-border-color: #d86c27; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bio.harshana.controllers.DashboardController">
+<AnchorPane fx:id="AnchorPaneContext" prefHeight="650.0" prefWidth="1000.0" style="-fx-background-color: #ffffff; -fx-border-color: #d86c27; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bio.harshana.controllers.DashboardController">
     <Label fx:id="lblHome" layoutX="273.0" layoutY="19.0" onMouseClicked="#homeOnAction" text="Home">
         <font>
             <Font name="Consolas Bold" size="15.0" />
@@ -104,22 +104,22 @@
       </cursor>
    </Label>
    <Line fx:id="lineUnpaid" endX="40.0" layoutX="681.0" layoutY="38.0" startX="2.1999969482421875" stroke="#d86c27" strokeWidth="3.0" />
-   <ImageView fitHeight="18.0" fitWidth="20.0" layoutX="861.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fitHeight="18.0" fitWidth="20.0" layoutX="813.0" layoutY="17.0" pickOnBounds="true" preserveRatio="true">
       <image>
          <Image url="@assets/setting-lines%20(1).png" />
       </image>
    </ImageView>
-   <JFXButton buttonType="RAISED" layoutX="856.0" layoutY="15.0" onAction="#settingsOnAction" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
+   <JFXButton buttonType="RAISED" layoutX="808.0" layoutY="13.0" onAction="#settingsOnAction" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
    </JFXButton>
-   <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="890.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+   <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="847.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
       <image>
-         <Image url="@assets/notification.png" />
+         <Image url="@assets/account.png" />
       </image>
    </ImageView>
-   <JFXButton buttonType="RAISED" layoutX="889.0" layoutY="15.0" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
+   <JFXButton buttonType="RAISED" layoutX="846.0" layoutY="13.0" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
       <cursor>
          <Cursor fx:constant="HAND" />
       </cursor>
@@ -134,4 +134,9 @@
          <Cursor fx:constant="HAND" />
       </cursor>
    </JFXButton>
+   <Label fx:id="lblUserName" layoutX="881.0" layoutY="17.0" prefHeight="18.0" prefWidth="75.0" text="Nermo">
+      <font>
+         <Font name="Consolas Bold" size="14.0" />
+      </font>
+   </Label>
 </AnchorPane>
