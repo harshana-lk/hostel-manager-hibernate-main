@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -104,5 +104,34 @@
       </cursor>
    </Label>
    <Line fx:id="lineUnpaid" endX="40.0" layoutX="681.0" layoutY="38.0" startX="2.1999969482421875" stroke="#d86c27" strokeWidth="3.0" />
-   <Button layoutX="866.0" layoutY="17.0" mnemonicParsing="false" onAction="#settingsOnAction" text="Settings" />
+   <ImageView fitHeight="18.0" fitWidth="20.0" layoutX="861.0" layoutY="19.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/setting-lines%20(1).png" />
+      </image>
+   </ImageView>
+   <JFXButton buttonType="RAISED" layoutX="856.0" layoutY="15.0" onAction="#settingsOnAction" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </JFXButton>
+   <ImageView fitHeight="26.0" fitWidth="27.0" layoutX="890.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/notification.png" />
+      </image>
+   </ImageView>
+   <JFXButton buttonType="RAISED" layoutX="889.0" layoutY="15.0" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </JFXButton>
+   <ImageView fitHeight="18.0" fitWidth="18.0" layoutX="970.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
+      <image>
+         <Image url="@assets/close.png" />
+      </image>
+   </ImageView>
+   <JFXButton fx:id="btnClose" buttonType="RAISED" layoutX="965.0" layoutY="4.0" onAction="#closeOnAction" opacity="0.0" prefHeight="18.0" prefWidth="27.0" text=" ">
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+   </JFXButton>
 </AnchorPane>

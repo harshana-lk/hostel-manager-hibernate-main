@@ -1,5 +1,6 @@
 package bio.harshana.controllers;
 
+import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -30,6 +31,7 @@ public class DashboardController {
     public Line lineHistory;
     public Label lblUnPaid;
     public Line lineUnpaid;
+    public JFXButton btnClose;
 
 
     public void initialize(){
@@ -124,7 +126,7 @@ public class DashboardController {
         lineHistory.setOpacity(0);
         lineUnpaid.setOpacity(1);
         try {
-            Navigation.setPane(Routes.HISTORY, secondaryPain);
+            Navigation.setPane(Routes.UNPAID, secondaryPain);
         } catch (IOException e) {
             e.printStackTrace();
             new Alert(Alert.AlertType.ERROR, "Error while loading");
