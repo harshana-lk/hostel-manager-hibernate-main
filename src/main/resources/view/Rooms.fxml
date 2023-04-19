@@ -23,25 +23,25 @@
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Label>
-        <TextField fx:id="txtID" layoutX="42.0" layoutY="100.0" prefHeight="26.0" prefWidth="230.0" />
+        <TextField fx:id="txtID" layoutX="42.0" layoutY="100.0" onKeyReleased="#keyPress" prefHeight="26.0" prefWidth="230.0" />
         <Label layoutX="42.0" layoutY="161.0" text="Type">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Label>
-        <TextField fx:id="txtType" layoutX="42.0" layoutY="179.0" prefHeight="26.0" prefWidth="230.0" />
+        <TextField fx:id="txtType" layoutX="42.0" layoutY="179.0" onKeyReleased="#typePressed" prefHeight="26.0" prefWidth="230.0" />
         <Label layoutX="42.0" layoutY="244.0" text="KeyMoney(LKR)">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Label>
-        <TextField fx:id="txtKeyMoney" layoutX="42.0" layoutY="262.0" prefHeight="26.0" prefWidth="230.0" />
+        <TextField fx:id="txtKeyMoney" layoutX="42.0" layoutY="262.0" onKeyReleased="#moneyPressed" prefHeight="26.0" prefWidth="230.0" />
         <Label layoutX="42.0" layoutY="331.0" text="Room QTY">
             <font>
                 <Font name="Consolas Bold" size="15.0" />
             </font>
         </Label>
-        <TextField fx:id="txtQty" layoutX="42.0" layoutY="349.0" prefHeight="26.0" prefWidth="230.0" />
+        <TextField fx:id="txtQty" layoutX="42.0" layoutY="349.0" onKeyReleased="#qtyPressed" prefHeight="26.0" prefWidth="230.0" />
     </AnchorPane>
     <JFXButton fx:id="btnAdd" buttonType="RAISED" layoutX="45.0" layoutY="447.0" onAction="#saveRoomOnAction" prefHeight="34.0" prefWidth="58.0" style="-fx-background-radius: 35; -fx-border-color: #16a085; -fx-border-radius: 35; -fx-border-width: 3;" text="Add" textFill="#16a085">
         <font>

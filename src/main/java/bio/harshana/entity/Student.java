@@ -17,19 +17,19 @@ import java.util.List;
 public class Student {
     @Id
     @Column(nullable = false)
-    private String id;
+    private String stID;
     private String name;
     @Column(columnDefinition = "TEXT")
     private String address;
     private String contact;
     private LocalDate dob;
     private String gender;
+
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Reservation> reservations = new ArrayList<>();
 
-
-    public Student(String id, String name, String address, String contact, LocalDate dob, String gender) {
-        this.id = id;
+    public Student(String stID, String name, String address, String contact, LocalDate dob, String gender) {
+        this.stID = stID;
         this.name = name;
         this.address = address;
         this.contact = contact;
@@ -37,8 +37,9 @@ public class Student {
         this.gender = gender;
     }
 
+
     public StudentDTO toStudentDTO() {
-        return new StudentDTO(this.id, this.name, this.address, this.contact, this.dob, this.gender);
+        return new StudentDTO(this.stID, this.name, this.address, this.contact, this.dob, this.gender);
 
     }
 }

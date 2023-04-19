@@ -1,40 +1,81 @@
 package bio.harshana.dao.custom.impl;
 
 import bio.harshana.entity.User;
+import bio.harshana.util.FactoryConfiguration;
 import bio.harshana.dao.custom.UserDAO;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class UserDAOImpl implements UserDAO {
-
-    @Override
-    public List<User> getAll(Session session) {
-        return session.createQuery("FROM User").list();
-
+    private Session getSession() {
+        return FactoryConfiguration.getInstance().getSession();
     }
 
     @Override
-    public void save(User entity, Session session) throws SQLException, ClassNotFoundException {
-        session.save(entity);
+    public List<User> getAll() {
+        try (Session session = getSession()) {
+            return session.createQuery("FROM User").list();
+        }
     }
 
     @Override
-    public void update(User dto, Session session) throws SQLException, ClassNotFoundException {
-        session.update(dto);
-
+    public boolean save(User entity) throws SQLException, ClassNotFoundException {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(entity);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Transaction transaction = getSession().getTransaction();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        }
     }
 
     @Override
-    public User search(String s, Session session) throws SQLException, ClassNotFoundException {
-        return null;
+    public boolean update(User dto) throws SQLException, ClassNotFoundException {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(dto);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Transaction transaction = getSession().getTransaction();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        }
     }
 
     @Override
-    public void delete(User s, Session session) throws SQLException, ClassNotFoundException {
-
+    public User search(String s) {
+        try (Session session = getSession()) {
+            return session.get(User.class, s);
+        }
     }
 
-
+    @Override
+    public boolean delete(User s) throws SQLException, ClassNotFoundException {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(s);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Transaction transaction = getSession().getTransaction();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        }
+    }
 }

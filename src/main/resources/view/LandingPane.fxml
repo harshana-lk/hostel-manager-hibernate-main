@@ -1,44 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="576.0" prefWidth="991.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bio.harshana.controllers.LandingPaneController">
+<AnchorPane prefHeight="576.0" prefWidth="991.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="bio.harshana.controllers.LandingPaneController">
    <children>
-      <Label layoutX="56.0" layoutY="402.0" text="or follow the locals.">
+      <Label layoutX="56.0" layoutY="401.0" text="or follow the locals.">
          <font>
             <Font name="Consolas Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="118.0" text="Rest">
+      <Label layoutX="56.0" layoutY="117.0" text="Rest">
          <font>
             <Font name="Consolas Bold" size="51.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="176.0" text="Study">
+      <Label layoutX="56.0" layoutY="175.0" text="Study">
          <font>
             <Font name="Consolas Bold" size="51.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="358.0" text="Explore the best of Municipality of Loppersum! Whether">
+      <Label layoutX="56.0" layoutY="357.0" text="Explore the best of Municipality of Loppersum! Whether">
          <font>
             <Font name="Consolas Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="56.0" layoutY="379.0" text="you want to experience the city like a tourist">
+      <Label layoutX="56.0" layoutY="378.0" text="you want to experience the city like a tourist">
          <font>
             <Font name="Consolas Bold" size="15.0" />
          </font>
       </Label>
-      <ImageView fitHeight="553.0" fitWidth="463.0" layoutX="521.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="553.0" fitWidth="463.0" layoutX="521.0" layoutY="57.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/studying.png" />
          </image>
       </ImageView>
-      <Label layoutX="56.0" layoutY="238.0" text="Enjoy the Day">
+      <Label layoutX="56.0" layoutY="237.0" text="Enjoy the Day">
          <font>
             <Font name="Consolas Bold" size="51.0" />
          </font>

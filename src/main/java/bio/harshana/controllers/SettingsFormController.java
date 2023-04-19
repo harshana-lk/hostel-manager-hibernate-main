@@ -1,15 +1,12 @@
 package bio.harshana.controllers;
 
-import bio.harshana.bo.BOFactory;
 import com.jfoenix.controls.JFXToggleButton;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import bio.harshana.bo.BOFactory;
 import bio.harshana.bo.custom.UserBO;
 import bio.harshana.dto.UserDTO;
-
-import java.util.List;
 
 public class SettingsFormController {
 
@@ -23,22 +20,24 @@ public class SettingsFormController {
     private String password = "";
 
     public void initialize() {
-        List<UserDTO> all = user.getAll();
-
-        userDTO = all.get(0);
+        userDTO = LoginSessions.user;
         txtUsername.setText(userDTO.getUsername());
-        password = all.get(0).getPassword();
+        password = userDTO.getPassword();
     }
 
-    public void saveOnAction(ActionEvent actionEvent) {
-        if (txtCurrentPass.getText().equals(password)) {
-            userDTO.setPassword(txtNewPass.getText());
-            user.update(userDTO);
-            new Alert(Alert.AlertType.INFORMATION, "Done!").show();
+    public void saveOnAction() {
+        try {
 
-
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Incorrect password").show();
+            if (txtCurrentPass.getText().equals(password)) {
+                userDTO.setPassword(txtNewPass.getText().isEmpty() ? password : txtNewPass.getText());
+                userDTO.setUsername(txtUsername.getText().isEmpty() ? userDTO.getUsername() : txtUsername.getText());
+                user.update(userDTO);
+                new Alert(Alert.AlertType.INFORMATION, "Done!").show();
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Incorrect password").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

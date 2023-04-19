@@ -1,10 +1,11 @@
 package bio.harshana.dao.custom;
 
+import bio.harshana.projection.UnpaidDetails;
 import bio.harshana.dao.SuperDAO;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.List;
 
 public interface QueryDAO extends SuperDAO {
-    ArrayList<Object[]> search(String search) throws SQLException, ClassNotFoundException;
+    List<UnpaidDetails> getAllUnpaid();
+
 }

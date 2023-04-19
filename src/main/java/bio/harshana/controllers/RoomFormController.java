@@ -1,15 +1,17 @@
 package bio.harshana.controllers;
 
-import bio.harshana.bo.BOFactory;
 import com.jfoenix.controls.JFXButton;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import bio.harshana.bo.BOFactory;
 import bio.harshana.bo.custom.RoomBO;
 import bio.harshana.dto.RoomDTO;
 import bio.harshana.tm.RoomTM;
+import bio.harshana.util.Regex;
+import bio.harshana.util.TextFields;
 
 import java.util.List;
 
@@ -63,64 +65,98 @@ public class RoomFormController {
 
     public void setRoomsTable() {
         tblRooms.getItems().clear();
-        List<RoomDTO> allRooms = roomBO.getAll();
-        if (allRooms != null) {
-            for (RoomDTO room : allRooms) {
-                tblRooms.getItems().add(new RoomTM(room.getId(), room.getType(), room.getKeyMoney(), room.getQty()));
+        try {
+            List<RoomDTO> allRooms = roomBO.getAll();
+            if (allRooms != null) {
+                allRooms.forEach(room -> tblRooms.getItems().add(new RoomTM(room.getId(), room.getType(), room.getKeyMoney(), room.getQty())));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void saveRoomOnAction() {
-        if (roomBO.isExists(txtID.getText())) {
-            new Alert(Alert.AlertType.WARNING, "Already Saved Room").show();
-            return;
-        }
-        boolean saved = roomBO.save(new RoomDTO(
-                txtID.getText(),
-                txtType.getText(),
-                Double.parseDouble(txtKeyMoney.getText()),
-                Integer.parseInt(txtQty.getText())
-        ));
-        if (saved) {
-            setRoomsTable();
-            clear();
-            new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+        try {
+            if (isAllFieldsComplete()) {
+                if (roomBO.isExists(txtID.getText())) {
+                    new Alert(Alert.AlertType.WARNING, "Already Saved Room").show();
+                    return;
+                }
+                boolean saved = roomBO.save(new RoomDTO(
+                        txtID.getText(),
+                        txtType.getText(),
+                        Double.parseDouble(txtKeyMoney.getText()),
+                        Integer.parseInt(txtQty.getText())
+                ));
+                if (saved) {
+                    setRoomsTable();
+                    clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check All Fields").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void updateOnAction() {
-        boolean saved = roomBO.update(new RoomDTO(
-                txtID.getText(),
-                txtType.getText(),
-                Double.parseDouble(txtKeyMoney.getText()),
-                Integer.parseInt(txtQty.getText())
-        ));
-        if (saved) {
-            setRoomsTable();
-            clear();
-            new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+        try {
+            if (isAllFieldsComplete()) {
+                boolean saved = roomBO.update(new RoomDTO(
+                        txtID.getText(),
+                        txtType.getText(),
+                        Double.parseDouble(txtKeyMoney.getText()),
+                        Integer.parseInt(txtQty.getText())
+                ));
+                if (saved) {
+                    setRoomsTable();
+                    clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check All Fields").show();
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     public void deleteOnAction() {
-        boolean saved = roomBO.delete(new RoomDTO(
-                txtID.getText(),
-                txtType.getText(),
-                Double.parseDouble(txtKeyMoney.getText()),
-                Integer.parseInt(txtQty.getText())
-        ));
-        if (saved) {
-            setRoomsTable();
-            clear();
-            new Alert(Alert.AlertType.CONFIRMATION, "Done Deleting").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+        try {
+            if (isAllFieldsComplete()) {
+                boolean saved = roomBO.delete(new RoomDTO(
+                        txtID.getText(),
+                        txtType.getText(),
+                        Double.parseDouble(txtKeyMoney.getText()),
+                        Integer.parseInt(txtQty.getText())
+                ));
+                if (saved) {
+                    setRoomsTable();
+                    clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Done Deleting").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check All Fields").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    private boolean isAllFieldsComplete() {
+        return Regex.isTextFieldValid(TextFields.ROOM_ID, txtID.getText())
+                && Regex.isTextFieldValid(TextFields.STRING, txtType.getText())
+                && Regex.isTextFieldValid(TextFields.DOUBLE, txtKeyMoney.getText())
+                && Regex.isTextFieldValid(TextFields.INTEGER, txtQty.getText());
     }
 
     public void clear() {
@@ -128,5 +164,29 @@ public class RoomFormController {
         txtID.clear();
         txtType.clear();
         txtKeyMoney.clear();
+        txtID.setText("RM-");
+        btnAdd.setDisable(false);
+        btnUpdate.setDisable(true);
+        btnDelete.setDisable(true);
+    }
+
+    public void keyPress() {
+        boolean b = Regex.setTextColor(TextFields.ROOM_ID, txtID);
+        btnAdd.setDisable(!b);
+    }
+
+    public void typePressed() {
+        boolean b = Regex.setTextColor(TextFields.STRING, txtID);
+        btnAdd.setDisable(!b);
+    }
+
+    public void moneyPressed() {
+        boolean b = Regex.setTextColor(TextFields.DOUBLE, txtKeyMoney);
+        btnAdd.setDisable(!b);
+    }
+
+    public void qtyPressed() {
+        boolean b = Regex.setTextColor(TextFields.INTEGER, txtQty);
+        btnAdd.setDisable(!b);
     }
 }

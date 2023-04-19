@@ -4,12 +4,7 @@ import bio.harshana.dao.DAOFactory;
 import bio.harshana.dao.DAOTypes;
 import bio.harshana.dao.custom.StudentDAO;
 import bio.harshana.dto.StudentDTO;
-import bio.harshana.entity.Student;
-import bio.harshana.util.FactoryConfiguration;
 import bio.harshana.bo.custom.StudentBO;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
 import java.sql.SQLException;
@@ -21,57 +16,18 @@ public class StudentBOImpl implements StudentBO {
     private final StudentDAO studentDAO = (StudentDAO) DAOFactory.getDaoFactory().getDAO(DAOTypes.STUDENT);
 
     @Override
-    public boolean save(StudentDTO obj) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            studentDAO.save(obj.toStudent(), session);
-            transaction.commit();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        } finally {
-            session.close();
-        }
+    public boolean save(StudentDTO obj) throws SQLException, ClassNotFoundException {
+        return studentDAO.save(obj.toStudent());
     }
 
     @Override
-    public boolean delete(StudentDTO obj) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            studentDAO.delete(obj.toStudent(), session);
-            transaction.commit();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        } finally {
-            session.close();
-        }
+    public boolean delete(StudentDTO obj) throws SQLException, ClassNotFoundException {
+        return studentDAO.delete(obj.toStudent());
     }
 
     @Override
-    public boolean update(StudentDTO obj) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            studentDAO.update(obj.toStudent(), session);
-            transaction.commit();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        } finally {
-            session.close();
-        }
+    public boolean update(StudentDTO obj) throws SQLException, ClassNotFoundException {
+        return studentDAO.update(obj.toStudent());
     }
 
     @Override
@@ -81,64 +37,21 @@ public class StudentBOImpl implements StudentBO {
 
     @Override
     public List<StudentDTO> getAll() {
-        Session session = FactoryConfiguration.getInstance().getSession();
         List<StudentDTO> result = new ArrayList<>();
+        studentDAO.getAll().forEach(e -> {
+            result.add(e.toStudentDTO());
 
-        try {
-            List<Student> all = studentDAO.getAll(session);
-            if (all != null) {
-                for (Student c : all
-                ) {
-                    result.add(c.toStudentDTO());
-                }
-            }
-
-            return result;
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-
-            return result;
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            session.close();
-        }
+        });
+        return result;
     }
 
     @Override
-    public StudentDTO get(String id) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-
-        try {
-            Student student = studentDAO.search(id, session);
-            transaction.commit();
-            session.close();
-            return student.toStudentDTO();
-        } catch (Exception e) {
-            session.close();
-            return null;
-        }
+    public StudentDTO get(String id) throws SQLException, ClassNotFoundException {
+        return studentDAO.search(id).toStudentDTO();
     }
 
     @Override
-    public boolean isExists(String id) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = null;
-        boolean b = false;
-
-        try {
-            transaction = session.beginTransaction();
-            Student search = studentDAO.search(id, session);
-            b = search != null;
-            transaction.commit();
-        } catch (HibernateException | SQLException | ClassNotFoundException e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return b;
+    public boolean isExists(String id) throws SQLException, ClassNotFoundException {
+        return studentDAO.search(id) != null;
     }
 }

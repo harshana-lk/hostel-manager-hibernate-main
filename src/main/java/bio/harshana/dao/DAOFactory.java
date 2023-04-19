@@ -1,7 +1,6 @@
 package bio.harshana.dao;
 
 import bio.harshana.dao.custom.impl.*;
-//import me.siyum.dao.custom.impl.*;
 
 public class DAOFactory {
     private static DAOFactory daoFactory;

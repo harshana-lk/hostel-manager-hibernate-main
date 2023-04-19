@@ -1,38 +1,82 @@
 package bio.harshana.dao.custom.impl;
 
 import bio.harshana.entity.Room;
+import bio.harshana.util.FactoryConfiguration;
 import bio.harshana.dao.custom.RoomDAO;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import java.sql.SQLException;
 import java.util.List;
 
 public class RoomDAOImpl implements RoomDAO {
 
-
-    @Override
-    public List<Room> getAll(Session session) throws SQLException, ClassNotFoundException {
-        return session.createQuery("FROM Room").list();
+    private Session getSession() {
+        return FactoryConfiguration.getInstance().getSession();
     }
 
     @Override
-    public void save(Room dto, Session session) throws SQLException, ClassNotFoundException {
-        session.save(dto);
+    public List<Room> getAll() {
+        try (Session session = getSession()) {
+            return session.createQuery("FROM Room").list();
+        }
     }
 
     @Override
-    public void update(Room dto, Session session) throws SQLException, ClassNotFoundException {
-        session.update(dto);
+    public boolean save(Room dto) throws SQLException, ClassNotFoundException {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.save(dto);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Transaction transaction = getSession().getTransaction();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        }
     }
 
     @Override
-    public Room search(String s, Session session) throws SQLException, ClassNotFoundException {
-        return session.get(Room.class, s);
+    public boolean update(Room dto) throws SQLException, ClassNotFoundException {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.update(dto);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Transaction transaction = getSession().getTransaction();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        }
     }
 
     @Override
-    public void delete(Room s, Session session) throws SQLException, ClassNotFoundException {
-        session.delete(s);
+    public Room search(String s) {
+        try (Session session = getSession()) {
+            return session.get(Room.class, s);
+        }
     }
 
+    @Override
+    public boolean delete(Room s) throws SQLException, ClassNotFoundException {
+        try (Session session = getSession()) {
+            Transaction transaction = session.beginTransaction();
+            session.delete(s);
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            Transaction transaction = getSession().getTransaction();
+            if (transaction != null && transaction.isActive()) {
+                transaction.rollback();
+            }
+            return false;
+        }
+    }
 }

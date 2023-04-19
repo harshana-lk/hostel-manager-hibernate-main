@@ -1,8 +1,6 @@
 package bio.harshana.controllers;
 
 import com.jfoenix.controls.JFXButton;
-import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -18,7 +16,6 @@ import java.io.IOException;
 
 public class DashboardController {
     public AnchorPane secondaryPain;
-    public Label lblClose;
     public Line lineReservation;
     public Line lineStudents;
     public Line lineRooms;
@@ -36,14 +33,17 @@ public class DashboardController {
     public AnchorPane AnchorPaneContext;
 
 
-    public void initialize(){
+    public void initialize() {
         lineHome.setOpacity(1);
         lineRooms.setOpacity(0);
         lineStudents.setOpacity(0);
         lineReservation.setOpacity(0);
         lineHistory.setOpacity(0);
         lineUnpaid.setOpacity(0);
+
+        lblUserName.setText(LoginSessions.user.getUsername());
     }
+
     public void homeOnAction() {
         lineHome.setOpacity(1);
         lineRooms.setOpacity(0);
@@ -97,7 +97,7 @@ public class DashboardController {
         try {
             Navigation.setPane(Routes.RESERVATIONS, secondaryPain);
         } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR, "Error while loading");
+            e.printStackTrace();
         }
     }
 
@@ -140,7 +140,7 @@ public class DashboardController {
     }
 
 
-    public void settingsOnAction(ActionEvent actionEvent) throws IOException {
+    public void settingsOnAction() throws IOException {
         Stage stage = new Stage();
         stage.setTitle("Home");
         stage.setScene(new Scene(FXMLLoader.load(Navigation.class.getResource("/view/Settings.fxml"))));

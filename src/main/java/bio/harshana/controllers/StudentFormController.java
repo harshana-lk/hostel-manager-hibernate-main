@@ -1,17 +1,19 @@
 package bio.harshana.controllers;
 
-import bio.harshana.bo.BOFactory;
 import com.jfoenix.controls.JFXButton;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import bio.harshana.bo.BOFactory;
 import bio.harshana.bo.custom.StudentBO;
 import bio.harshana.dto.StudentDTO;
 import bio.harshana.tm.StudentTM;
+import bio.harshana.util.Regex;
+import bio.harshana.util.TextFields;
 
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,84 +76,111 @@ public class StudentFormController {
 
     private void loadAllStudents() {
         tblStudent.getItems().clear();
-
-        List<StudentDTO> allStudents = studentBO.getAll();
-        if (allStudents != null) {
-            for (StudentDTO student : allStudents) {
-                System.out.println("Loop");
-                System.out.println(student.getId());
-                tblStudent.getItems().add(new StudentTM(student.getId(), student.getName(), student.getAddress(), student.getContact(), student.getDob(), student.getGender()));
+        try {
+            List<StudentDTO> allStudents = studentBO.getAll();
+            if (allStudents != null) {
+                allStudents.forEach(student -> tblStudent.getItems().add(new StudentTM(student.getId(), student.getName(), student.getAddress(), student.getContact(), student.getDob(), student.getGender())));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
 
     public void updateOnAction() {
-        boolean saved = studentBO.update(new StudentDTO(
-                txtID.getText(),
-                txtName.getText(),
-                txtAddress.getText(),
-                txtContactNO.getText(),
-                dobPicker.getValue(),
-                cmbGender.getValue()
-        ));
-        if (saved) {
-            loadAllStudents();
-            clear();
-            new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Error Saving").show();
-        }
-    }
-
-    public void deleteOnAction() {
-        boolean saved = studentBO.delete(new StudentDTO(
-                txtID.getText(),
-                txtName.getText(),
-                txtAddress.getText(),
-                txtContactNO.getText(),
-                dobPicker.getValue(),
-                cmbGender.getValue()
-        ));
-        if (saved) {
-            loadAllStudents();
-            clear();
-            new Alert(Alert.AlertType.CONFIRMATION, "Done Deleting").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Error Deleting").show();
-        }
-    }
-
-    public void saveOnAction(ActionEvent actionEvent) {
-        if (studentBO.isExists(txtID.getText())) {
-            new Alert(Alert.AlertType.WARNING, "Already Saved Room").show();
-            return;
-        }
-        boolean saved = studentBO.save(new StudentDTO(
+        try {
+            if (isAllFieldsValid()) {
+                boolean saved = studentBO.update(new StudentDTO(
                         txtID.getText(),
                         txtName.getText(),
                         txtAddress.getText(),
                         txtContactNO.getText(),
                         dobPicker.getValue(),
                         cmbGender.getValue()
-                )
-        );
-        if (saved) {
-            setStudentsTable();
-            clear();
-            new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
-        } else {
-            new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+                ));
+                if (saved) {
+                    loadAllStudents();
+                    clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check All Fields").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteOnAction() {
+        try {
+            if (isAllFieldsValid()) {
+                boolean saved = studentBO.delete(new StudentDTO(
+                        txtID.getText(),
+                        txtName.getText(),
+                        txtAddress.getText(),
+                        txtContactNO.getText(),
+                        dobPicker.getValue(),
+                        cmbGender.getValue()
+                ));
+                if (saved) {
+                    loadAllStudents();
+                    clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Done Deleting").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error Deleting").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check All Fields").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveOnAction() {
+        try {
+            if (isAllFieldsValid()) {
+                if (studentBO.isExists(txtID.getText())) {
+                    new Alert(Alert.AlertType.WARNING, "Already Saved Student").show();
+                    return;
+                }
+                boolean saved = studentBO.save(new StudentDTO(
+                                txtID.getText(),
+                                txtName.getText(),
+                                txtAddress.getText(),
+                                txtContactNO.getText(),
+                                dobPicker.getValue(),
+                                cmbGender.getValue()
+                        )
+                );
+                if (saved) {
+                    setStudentsTable();
+                    clear();
+                    new Alert(Alert.AlertType.CONFIRMATION, "Done Saving").show();
+                } else {
+                    new Alert(Alert.AlertType.ERROR, "Error Saving").show();
+                }
+            } else {
+                new Alert(Alert.AlertType.ERROR, "Please Check All Fields").show();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
     private void setStudentsTable() {
         tblStudent.getItems().clear();
-        List<StudentDTO> allRooms = studentBO.getAll();
-        if (allRooms != null) {
-            for (StudentDTO room : allRooms) {
-                tblStudent.getItems().add(new StudentTM(room.getId(), room.getName(), room.getAddress(), room.getContact(), room.getDob(), room.getGender()));
+        try {
+            List<StudentDTO> allRooms = studentBO.getAll();
+            if (allRooms != null) {
+                allRooms.forEach(s -> tblStudent.getItems().add(new StudentTM(s.getId(),
+                        s.getName(), s.getAddress(),
+                        s.getContact(), s.getDob(),
+                        s.getGender())));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -162,5 +191,57 @@ public class StudentFormController {
         txtContactNO.clear();
         cmbGender.getSelectionModel().clearSelection();
 
+    }
+
+    private boolean isValidDate() {
+        LocalDate selectedDate = dobPicker.getValue();
+        if (selectedDate == null) {
+            return false; // No date is selected
+        }
+
+        LocalDate currentDate = LocalDate.now();
+        long years = ChronoUnit.YEARS.between(selectedDate, currentDate);
+        return years >= 18;
+    }
+
+    private boolean isGenderValid() {
+        return cmbGender.selectionModelProperty().getValue() != null;
+    }
+
+    private boolean isAllFieldsValid() {
+        return isValidDate()
+                && isGenderValid()
+                && Regex.isTextFieldValid(TextFields.STRING, txtID.getText())
+                && Regex.isTextFieldValid(TextFields.STRING, txtName.getText())
+                && Regex.isTextFieldValid(TextFields.ADDRESS, txtAddress.getText())
+                && Regex.isTextFieldValid(TextFields.PHONE, txtContactNO.getText());
+    }
+
+    public void stContactPressed() {
+        boolean b = Regex.setTextColor(TextFields.PHONE, txtContactNO);
+        btnAdd.setDisable(!b);
+    }
+
+    public void stAddressPressed() {
+        boolean b = Regex.setTextColor(TextFields.ADDRESS, txtAddress);
+        btnAdd.setDisable(!b);
+    }
+
+    public void stNamePressed() {
+        boolean b = Regex.setTextColor(TextFields.STRING, txtName);
+        btnAdd.setDisable(!b);
+    }
+
+    public void stIDPressed() {
+        boolean b = Regex.setTextColor(TextFields.STRING, txtID);
+        btnAdd.setDisable(!b);
+    }
+
+    public void setDOB() {
+        btnAdd.setDisable(!isValidDate());
+    }
+
+    public void setGender() {
+        btnAdd.setDisable(!isGenderValid());
     }
 }

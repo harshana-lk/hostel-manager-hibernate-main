@@ -4,12 +4,7 @@ import bio.harshana.dao.DAOFactory;
 import bio.harshana.dao.DAOTypes;
 import bio.harshana.dao.custom.RoomDAO;
 import bio.harshana.dto.RoomDTO;
-import bio.harshana.entity.Room;
-import bio.harshana.util.FactoryConfiguration;
 import bio.harshana.bo.custom.RoomBO;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
 
 import javax.persistence.NoResultException;
 import java.sql.SQLException;
@@ -21,57 +16,18 @@ public class RoomBOImpl implements RoomBO {
     private final RoomDAO roomDAO = (RoomDAO) DAOFactory.getDaoFactory().getDAO(DAOTypes.ROOM);
 
     @Override
-    public boolean save(RoomDTO obj) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            roomDAO.save(obj.toRoom(), session);
-            transaction.commit();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        } finally {
-            session.close();
-        }
+    public boolean save(RoomDTO obj) throws SQLException, ClassNotFoundException {
+        return roomDAO.save(obj.toRoom());
     }
 
     @Override
-    public boolean delete(RoomDTO obj) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            roomDAO.delete(obj.toRoom(), session);
-            transaction.commit();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        } finally {
-            session.close();
-        }
+    public boolean delete(RoomDTO obj) throws SQLException, ClassNotFoundException {
+        return roomDAO.delete(obj.toRoom());
     }
 
     @Override
-    public boolean update(RoomDTO obj) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            roomDAO.update(obj.toRoom(), session);
-            transaction.commit();
-            return true;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        } finally {
-            session.close();
-        }
+    public boolean update(RoomDTO obj) throws SQLException, ClassNotFoundException {
+        return roomDAO.update(obj.toRoom());
     }
 
     @Override
@@ -81,61 +37,18 @@ public class RoomBOImpl implements RoomBO {
 
     @Override
     public List<RoomDTO> getAll() {
-        Session session = FactoryConfiguration.getInstance().getSession();
         List<RoomDTO> result = new ArrayList<>();
-
-        try {
-            List<Room> all = roomDAO.getAll(session);
-            for (Room c : all
-            ) {
-                result.add(c.toRoomDTO());
-            }
-            return result;
-
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-
-            return result;
-        } catch (SQLException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        } finally {
-            session.close();
-        }
+        roomDAO.getAll().forEach(e -> result.add(e.toRoomDTO()));
+        return result;
     }
 
     @Override
-    public RoomDTO get(String id) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = session.beginTransaction();
-
-        try {
-            Room room = roomDAO.search(id, session);
-            transaction.commit();
-            session.close();
-            return room.toRoomDTO();
-        } catch (Exception e) {
-            session.close();
-            return null;
-        }
+    public RoomDTO get(String id) throws SQLException, ClassNotFoundException {
+        return roomDAO.search(id).toRoomDTO();
     }
 
     @Override
-    public boolean isExists(String id) {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = null;
-        boolean b = false;
-
-        try {
-            transaction = session.beginTransaction();
-            Room search = roomDAO.search(id, session);
-            b = search != null;
-            transaction.commit();
-        } catch (HibernateException | SQLException | ClassNotFoundException e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return b;
+    public boolean isExists(String id) throws SQLException, ClassNotFoundException {
+        return roomDAO.search(id) != null;
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
 public class Room {
     @Id
     @Column(nullable = false)
-    private String id;
+    private String roomID;
     private String type;
     private double keyMoney;
     private int qty;
@@ -24,7 +24,7 @@ public class Room {
     private List<Reservation> reservationList = new ArrayList<>();
 
     public Room(String id, String type, double keyMoney, int qty) {
-        this.id = id;
+        this.roomID = id;
         this.type = type;
         this.keyMoney = keyMoney;
         this.qty = qty;
@@ -32,6 +32,6 @@ public class Room {
 
 
     public RoomDTO toRoomDTO() {
-        return new RoomDTO(this.id, this.type, this.keyMoney, this.qty);
+        return new RoomDTO(this.roomID, this.type, this.keyMoney, this.qty);
     }
 }

@@ -13,14 +13,8 @@ public class Navigation {
     public static void navigation(Routes routes, AnchorPane pane) throws IOException {
         if (Objects.requireNonNull(routes) == Routes.DASHBOARD) {
             initUI("Dashboard", pane);
-            //            case SINGNFROM:
-//                window.setTitle("Sign From");
-//                initUI("signUp_from.fxml");
-//                break;
-//            case LOGINFROM:
-//                window.setTitle("Sign From");
-//                initUI("login_from.fxml");
-//                break;
+        } else {
+            initUI("Login", pane);
         }
     }
 
@@ -51,12 +45,12 @@ public class Navigation {
             case UNPAID:
                 panelUpdate("UnPaid", secondaryPain);
                 break;
+
         }
 
     }
 
     private static void panelUpdate(String location, AnchorPane pane) throws IOException {
-        System.out.println(location);
         pane.getChildren().add(FXMLLoader.load(Navigation.class.getResource("/view/" + location + ".fxml")));
     }
 }

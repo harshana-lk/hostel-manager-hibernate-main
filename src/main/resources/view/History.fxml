@@ -44,12 +44,15 @@
         </Label>
         <TableView fx:id="tblCart" layoutX="15.0" layoutY="22.0" prefHeight="388.0" prefWidth="918.0">
             <columns>
-                <TableColumn fx:id="colStID" prefWidth="117.0" text="Student ID" />
-                <TableColumn fx:id="colRoomTypeID" prefWidth="151.0" text="Room Type ID" />
-                <TableColumn fx:id="colKeyMoney" prefWidth="143.0" text="Key Money" />
-                <TableColumn fx:id="colPayingAmount" prefWidth="147.5" text="Paid Amount" />
-                <TableColumn fx:id="colDateFrom" prefWidth="185.5" text="Date From" />
-                <TableColumn fx:id="colDateTo" prefWidth="173.0" text="Date To" />
+            <TableColumn fx:id="colResID" prefWidth="83.23233032226562" text="Res ID" />
+                <TableColumn fx:id="colStID" prefWidth="87.7879409790039" text="Student ID" />
+                <TableColumn fx:id="colRoomTypeID" prefWidth="115.07589721679688" text="Room Type ID" />
+                <TableColumn fx:id="colKeyMoney" prefWidth="110.48501586914062" text="Key Money" />
+                <TableColumn fx:id="colPayingAmount" prefWidth="119.63150024414062" text="Paid Amount" />
+                <TableColumn fx:id="colDateFrom" prefWidth="127.18707275390625" text="Date From" />
+                <TableColumn fx:id="colDateTo" prefWidth="106.368896484375" text="Date To" />
+            <TableColumn fx:id="colStatus" prefWidth="84.58587646484375" text="Status" />
+            <TableColumn fx:id="colAction" prefWidth="84.91412353515625" text="Action" />
             </columns>
         </TableView>
     </AnchorPane>

@@ -1,40 +1,21 @@
 package bio.harshana.dao.custom.impl;
 
+import bio.harshana.projection.UnpaidDetails;
 import bio.harshana.util.FactoryConfiguration;
 import bio.harshana.dao.custom.QueryDAO;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class QueryDAOImpl implements QueryDAO {
+    private Session getSession() {
+        return FactoryConfiguration.getInstance().getSession();
+    }
 
     @Override
-    public ArrayList<Object[]> search(String search) throws SQLException, ClassNotFoundException {
-        Session session = FactoryConfiguration.getInstance().getSession();
-        Transaction transaction = null;
-        ArrayList<Object[]> arrayList = new ArrayList<>();
-
-        try {
-            transaction = session.beginTransaction();
-            Query query = session.createQuery("SELECT res.res_id, res.date, st.student_id, room.room_type_id, res.status FROM Reservation res INNER JOIN Room room ON res.room.room_type_id = room.room_type_id INNER JOIN Student st ON res.student.student_id = st.student_id WHERE res.res_id = : res_id OR st.student_id = : st_id OR room.room_type_id = : room_id OR res.status = : status");
-            query.setParameter("res_id", search);
-            query.setParameter("st_id", search);
-            query.setParameter("room_id", search);
-            query.setParameter("status", search);
-            List<Object[]> list = query.list();
-            arrayList.addAll(list);
-            transaction.commit();
-        } catch (HibernateException e) {
-            if (transaction != null) transaction.rollback();
-            e.printStackTrace();
-        } finally {
-            session.close();
+    public List<UnpaidDetails> getAllUnpaid() {
+        try (Session session = getSession()) {
+            return session.createQuery("SELECT new bio.harshana.projection.UnpaidDetails(S.stID, S.name,  S.contact, R.id, R.toPaid) FROM Student AS S INNER JOIN Reservation R ON R.student = S.stID WHERE R.status = 'unpaid'").list();
         }
-        return arrayList;
     }
 }
