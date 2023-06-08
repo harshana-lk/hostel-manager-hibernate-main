@@ -6,6 +6,7 @@
         <setting name="validation-enabled" value="true" />
         <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
+          <factory-entry name="HostelMangement" value="516cb403-7519-4318-abb7-41b2fb7ef3f5" />
           <factory-entry name="noname-a.xml@0" value="4e6f4d44-9302-4d4c-b9d0-efcc941e39bb" />
         </datasource-mapping>
         <naming-strategy-map />
